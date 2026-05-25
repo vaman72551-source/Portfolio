@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTestimonials();
     initProjectsFilter();
     initContactForm();
+    initProjectModal();
 });
 
 /**
@@ -424,3 +425,215 @@ function showToast(message, type = 'success') {
         }, 300);
     }, 4500);
 }
+
+/**
+ * Project Details Modal & Gallery Lightbox System (Projects Page)
+ */
+function initProjectModal() {
+    const projectCards = document.querySelectorAll('.project-card');
+    const modal = document.getElementById('project-modal');
+    const modalClose = document.getElementById('modal-close');
+    
+    if (!projectCards.length || !modal || !modalClose) return;
+    
+    const modalTitle = document.getElementById('modal-title');
+    const modalRole = document.getElementById('modal-role');
+    const modalCategory = document.getElementById('modal-category');
+    const modalDescription = document.getElementById('modal-description');
+    const modalDeliverables = document.getElementById('modal-deliverables');
+    const modalTags = document.getElementById('modal-tags');
+    const modalMainImg = document.getElementById('modal-main-img');
+    const modalThumbnails = document.getElementById('modal-thumbnails');
+    
+    // Lightbox Elements
+    const lightbox = document.getElementById('lightbox-modal');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    // Open Modal
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const title = card.getAttribute('data-title') || '';
+            const role = card.getAttribute('data-role') || '';
+            const categoryAttr = card.getAttribute('data-category') || '';
+            const description = card.getAttribute('data-long-description') || '';
+            const deliverablesStr = card.getAttribute('data-deliverables') || '';
+            const tagsStr = card.getAttribute('data-tags') || '';
+            const imagesStr = card.getAttribute('data-images') || '';
+            
+            // Format category name for badge
+            const categoryName = categoryAttr.split(' ').map(c => {
+                if (c === 'infra') return 'Infrastructure';
+                if (c === 'ai') return 'AI / Machine Learning';
+                if (c === 'web') return 'Web Application';
+                return c.charAt(0).toUpperCase() + c.slice(1);
+            }).join(' & ');
+            
+            // Set text content
+            if (modalTitle) modalTitle.textContent = title;
+            if (modalRole) modalRole.textContent = role ? `Role: ${role}` : '';
+            if (modalCategory) modalCategory.textContent = categoryName;
+            if (modalDescription) modalDescription.textContent = description;
+            
+            // Populate Deliverables List
+            if (modalDeliverables) {
+                modalDeliverables.innerHTML = '';
+                if (deliverablesStr) {
+                    const deliverables = deliverablesStr.split(';');
+                    deliverables.forEach(item => {
+                        if (item.trim()) {
+                            const li = document.createElement('li');
+                            li.textContent = item.trim();
+                            modalDeliverables.appendChild(li);
+                        }
+                    });
+                }
+            }
+            
+            // Populate Tags
+            if (modalTags) {
+                modalTags.innerHTML = '';
+                if (tagsStr) {
+                    const tags = tagsStr.split(',');
+                    tags.forEach(tag => {
+                        if (tag.trim()) {
+                            const span = document.createElement('span');
+                            span.className = 'px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[11px] font-bold uppercase tracking-wider';
+                            span.textContent = tag.trim();
+                            modalTags.appendChild(span);
+                        }
+                    });
+                }
+            }
+            
+            // Setup Gallery/Images & Thumbnails
+            if (modalThumbnails && modalMainImg) {
+                modalThumbnails.innerHTML = '';
+                if (imagesStr) {
+                    const images = imagesStr.split(',');
+                    
+                    // Set default main image
+                    modalMainImg.src = images[0].trim();
+                    
+                    // Populate thumbnails if there are multiple images
+                    if (images.length > 1) {
+                        images.forEach((imgSrc, idx) => {
+                            const cleanSrc = imgSrc.trim();
+                            const thumb = document.createElement('button');
+                            thumb.className = `w-12 h-12 rounded-lg border-2 overflow-hidden bg-surface-container transition-all hover:border-primary ${idx === 0 ? 'border-primary' : 'border-outline-variant/30'}`;
+                            thumb.innerHTML = `<img src="${cleanSrc}" alt="thumbnail" class="w-full h-full object-cover"/>`;
+                            
+                            thumb.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                modalMainImg.src = cleanSrc;
+                                // Update border UI
+                                modalThumbnails.querySelectorAll('button').forEach(btn => btn.classList.remove('border-primary'));
+                                modalThumbnails.querySelectorAll('button').forEach(btn => btn.classList.add('border-outline-variant/30'));
+                                thumb.classList.add('border-primary');
+                                thumb.classList.remove('border-outline-variant/30');
+                            });
+                            
+                            modalThumbnails.appendChild(thumb);
+                        });
+                        modalThumbnails.classList.remove('hidden');
+                    } else {
+                        modalThumbnails.classList.add('hidden');
+                    }
+                }
+            }
+            
+            // Animate Modal In
+            modal.classList.remove('hidden');
+            // Force reflow
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            
+            const modalContent = modal.querySelector('.bg-surface');
+            if (modalContent) {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }
+            document.body.classList.add('overflow-hidden'); // Prevent background scroll
+        });
+    });
+
+    // Close Modal Function
+    const closeModal = () => {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        
+        const modalContent = modal.querySelector('.bg-surface');
+        if (modalContent) {
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+        }
+        
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }, 300);
+    };
+
+    if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+    }
+    
+    // Close modal clicking outside the container
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // ESC key to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            if (!lightbox || lightbox.classList.contains('hidden')) {
+                closeModal();
+            }
+        }
+    });
+
+    // Lightbox Controls
+    if (modalMainImg && lightbox && lightboxImg) {
+        modalMainImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightboxImg.src = modalMainImg.src;
+            
+            lightbox.classList.remove('hidden');
+            void lightbox.offsetWidth;
+            lightbox.classList.remove('opacity-0');
+            lightbox.classList.add('opacity-100');
+            
+            lightboxImg.classList.remove('scale-95');
+            lightboxImg.classList.add('scale-100');
+        });
+        
+        const closeLightbox = () => {
+            lightbox.classList.remove('opacity-100');
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.remove('scale-100');
+            lightboxImg.classList.add('scale-95');
+            
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+            }, 300);
+        };
+        
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', closeLightbox);
+        }
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
+    }
+}
+
