@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Projects - Architect.io</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-container/30">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_15px_rgba(0,209,255,0.05)] transition-all duration-300 py-4">
+<div class="flex justify-between items-center px-margin max-w-[1440px] mx-auto relative">
+<div class="font-label-caps text-[14px] font-black tracking-tighter text-primary uppercase">
+    <a href="index.html">ARCHITECT.IO</a>
+</div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="index.html" id="nav-home">Home</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="index.html#stack" id="nav-stack">Stack</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="projects.html" id="nav-projects">Projects</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="contact.html" id="nav-contact">Contact</a>
+</nav>
+<div class="hidden md:flex items-center gap-md">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md active:scale-95 transition-transform hover:shadow-lg">
+                Resume
+            </button>
+</div>
+<!-- Mobile Menu Button -->
+<button id="mobile-menu-btn" class="md:hidden text-on-surface focus:outline-none flex items-center" aria-label="Toggle Menu">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<!-- Mobile Navigation Dropdown -->
+<div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-surface/95 backdrop-blur-xl border-b border-outline-variant/30 shadow-lg py-md px-margin flex flex-col gap-md z-40 transition-all duration-300">
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="index.html">Home</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="index.html#stack">Stack</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="projects.html">Projects</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="contact.html">Contact</a>
+<button class="bg-primary-container text-on-primary-container w-full py-3 rounded-lg font-label-md mt-2">
+                Resume
+            </button>
+</div>
+</div>
+</header>
+
+<main class="max-w-[1440px] mx-auto px-margin pt-28 pb-xl">
+<!-- Hero Section -->
+<section class="mb-xl text-left max-w-3xl">
+<h1 class="font-headline-xl text-headline-xl text-on-background mb-sm">Project Portfolio</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Engineering digital blueprints for scalable systems, high-performance infrastructure, and intelligent user experiences.</p>
+</section>
+
+<!-- Filter Bar -->
+<section class="mb-lg flex flex-wrap gap-sm items-center">
+<button class="filter-btn px-md py-sm rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md border-2 border-primary-container transition-all duration-300" data-filter="all">All</button>
+<button class="filter-btn px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border-2 border-transparent hover:border-outline-variant transition-all duration-300" data-filter="web">Web</button>
+<button class="filter-btn px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border-2 border-transparent hover:border-outline-variant transition-all duration-300" data-filter="infra">Infrastructure</button>
+<button class="filter-btn px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md border-2 border-transparent hover:border-outline-variant transition-all duration-300" data-filter="ai">AI</button>
+</section>
+
+<!-- Masonry Project Grid -->
+<div class="masonry-grid">
+<!-- Project 1 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="web infra">
+<div class="aspect-[4/5] relative overflow-hidden bg-surface-container">
+<img alt="Nexus Cloud Platform" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfhqTnzYLsZLrURKMepPWySFCjiMeld2s3hFDLR6Eq72tsoRtF0b3-h9CmJ5FmvhMKUQCkkzkRe7puDHDbKM-X4VkrxPo6l7jvAJq2lT1-QZwMhUFxuw6-ftoNX_ESop_rO2BTjg1aW73ZBPRgK2PEBLisKUEB_lbeekX_B8V_f82U7NKqu78AzZ4FBfdNjE4BmnA2LxMjpGrrz1uspf3J610kdt6IwLLkQgHuSf9IVvJ05qN-baxmJSyVXSn_BLJ0hNAlCJlrtsI"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Nexus Cloud</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Distributed edge computing platform designed to reduce latency for global end-users through automated point-of-presence deployment.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Next.js</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">AWS</span>
+</div>
+</div>
+</div>
+
+<!-- Project 2 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="ai">
+<div class="aspect-[1/1] relative overflow-hidden bg-surface-container">
+<img alt="AI Driven Analytics" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCom9hoEnznStn8awJqD4cjcAVkUqUiTCxEY1SXtysRG9VIiOEup6EAPRtWnybx2xgZrGSrpyoz2x3ith1AomSi8rSQJKYCRVGCe8FKeltIS0W_tvr_Y5Ne45wmpLuYkP6xE42vc0M_ILK_RQujAEpCjADBbdw_uF_RjXAoTSsbkpBcm8a_OOR1uBLXm8xxuW3wo3XCR3uYSUr0YQR4-sJae7k5pCWoUSMcChvDLRprr_S3nWYLJ-ERJP7dyD7GBKDbLTheOf_o8oo"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">AI-Driven Analytics</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Real-time predictive modeling for enterprise operations, leveraging deep learning to forecast supply chain bottlenecks.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Python</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">PyTorch</span>
+</div>
+</div>
+</div>
+
+<!-- Project 3 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="web">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container">
+<img alt="Quantum ERP System" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_tvPvESEaBWy_t3vKzEcxrHyDag2ubpg0e1aJ-55SfRfvbeFFFqk-yqYo-kEYqqLG8lXTH1ApJ_BfK_Wgmqtu-cXpcYHwCk-lI9XozlisgBJoS5-A1wStp7r5WRK-CQgBiAEUxBkfKU56qIUeUjhsfJpcysLYu49Nelw5PQ_vRLarVdtFliDKX7hNr0_I2zNR6yGrwR1WZ2jxtH1SDD5Ly5G7O2M9XWsfrvHl2p35TApIamOgv0Nr6od2qWSYdp-fKO6IiGHUGfE"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Quantum ERP</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Next-gen resource planning for global manufacturing. Orchestrates complex logistics with containerized microservices.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Go</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">K8s</span>
+</div>
+</div>
+</div>
+
+<!-- Project 4 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="infra">
+<div class="aspect-[3/4] relative overflow-hidden bg-surface-container">
+<img alt="Skyline API" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC_ml41D7idx_UjNWHld9NzUHPF4jdUJJybzQukSS9I9fMqw32B_HVVnOqQnXDNK5iJv2GjEw9w58Wpzy_K6id9krpWm3RZ43tOILhYH6pRp5kb5Sfnok7NLbHNXBeR7i2jTICEUi-rOeGuhUgP7ns3goSdd64Pd8Yu6iCqA9s_oQT9YnKN1MSgMVDf0sOZ7oNytjg3_ZSQ_5QqoBgnYhXqk87DTIisgO8_oRBSDV46g5ZZLzaRpHJaw4N4uSV_KTOkaIP4jA77os"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Skyline API</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Modular gateway for global financial services, ensuring ultra-secure transaction processing with zero-trust architecture.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Rust</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Terraform</span>
+</div>
+</div>
+</div>
+
+<!-- Project 5 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="web">
+<div class="aspect-[4/3] relative overflow-hidden bg-surface-container">
+<img alt="Studio Workspace" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAM1DsxIKpmdCtQFqeV1PN2Px4eem0ORzfuZe7wWdQmxC79JStgOQYNkKKQdDyQRbIorIm__ANSBvANZNZMliipPHfJ-1KzmBvXk7XycTeFtra1ogD-2fnzffwWThzxh2gGnvNXNH8EKNuQADgDtwaIj6ec-gKahaqpBwUfnozQX47-lVoudDNGOgCE7uKu8UzkPhp4OKMgJmFGBcZFjlEkimVVnZ6uQVGWSkKhtqW4iY5jhXSs2rRqIHVFUKmcVNpaqNRgsmE4xM"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Studio Workspace</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Internal tooling for collaborative system design and blueprinting, enabling real-time infrastructure mapping across teams.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">React</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Node.js</span>
+</div>
+</div>
+</div>
+
+<!-- Project 6 -->
+<div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group" data-category="infra">
+<div class="aspect-[1/1] relative overflow-hidden bg-surface-container">
+<img alt="Core Logic Optimization" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHXyu1kW6f1Lz-6SLJgrGq2Il77nYNE5QaM_oHNjSeXEzWCs9pu7I5tdjSertuX2Y9RHPWIlfTPeCKw09OjSBFCbyT3t5t1Ecw1mAH7Y7Qwz3DWaHLVugfOo8IuX5y96nqLWK0dnmlHY5fkn78Oags19rx2NU3LNIWk5GHKxciUDWZm8FdKYonk7SxXq1kDbUJLWVAV-bhaBq8kMoqBq1-j-wBt1XoVTziEVxJSIm2GtQVAfC5Ns5GVuLOx2CSVCwUpgq1P3o8I8M"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Core Logic</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Low-latency kernel optimization for IoT devices, maximizing hardware efficiency for high-density sensor networks.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">C++</span>
+<span class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[12px] font-bold uppercase tracking-wider">Azure</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container-lowest border-t border-white/5 mt-xl">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin gap-gutter max-w-[1440px] mx-auto">
+<div class="font-label-caps text-[14px] text-on-surface font-black">ARCHITECT.IO</div>
+<p class="font-code-sm text-[12px] text-secondary">© 2024 ARCHITECT.IO - Engineered for Performance</p>
+<div class="flex gap-md">
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">GitHub</a>
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

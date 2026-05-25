@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact - Architect.io</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body class="bg-surface selection:bg-primary-container/30">
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_0_15px_rgba(0,209,255,0.05)] transition-all duration-300 py-4">
+<div class="flex justify-between items-center px-margin max-w-[1440px] mx-auto relative">
+<div class="font-label-caps text-[14px] font-black tracking-tighter text-primary uppercase">
+    <a href="index.html">ARCHITECT.IO</a>
+</div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="index.html" id="nav-home">Home</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="index.html#stack" id="nav-stack">Stack</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="projects.html" id="nav-projects">Projects</a>
+<a class="nav-link font-body-base text-[16px] text-on-surface-variant hover:text-primary transition-colors" href="contact.html" id="nav-contact">Contact</a>
+</nav>
+<div class="hidden md:flex items-center gap-md">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-md active:scale-95 transition-transform hover:shadow-lg">
+                Resume
+            </button>
+</div>
+<!-- Mobile Menu Button -->
+<button id="mobile-menu-btn" class="md:hidden text-on-surface focus:outline-none flex items-center" aria-label="Toggle Menu">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<!-- Mobile Navigation Dropdown -->
+<div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-surface/95 backdrop-blur-xl border-b border-outline-variant/30 shadow-lg py-md px-margin flex flex-col gap-md z-40 transition-all duration-300">
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="index.html">Home</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="index.html#stack">Stack</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="projects.html">Projects</a>
+<a class="font-body-base text-[18px] text-on-surface-variant hover:text-primary py-2" href="contact.html">Contact</a>
+<button class="bg-primary-container text-on-primary-container w-full py-3 rounded-lg font-label-md mt-2">
+                Resume
+            </button>
+</div>
+</div>
+</header>
+
+<main class="max-w-[1440px] mx-auto px-margin pt-28 pb-xl">
+<!-- Hero Section -->
+<header class="max-w-3xl mb-xl">
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-md">
+                Contact <span class="text-primary-container">Architecture.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                Got a complex app idea or a bottleneck in your workflow? Drop me a message with your challenges, and I’ll map out exactly how we can solve them.
+            </p>
+</header>
+
+<!-- Contact Section Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left: Contact Form -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant p-md md:p-lg rounded-xl shadow-[0_2px_4px_rgba(15,23,42,0.04)]">
+<form class="space-y-md" novalidate>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Full Name</label>
+<input name="name" class="w-full bg-surface-container-low border-2 border-transparent rounded-lg p-md font-body-md text-body-md focus:border-primary-container focus:ring-0 transition-colors" placeholder="John Doe" type="text" required/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Email Address</label>
+<input name="email" class="w-full bg-surface-container-low border-2 border-transparent rounded-lg p-md font-body-md text-body-md focus:border-primary-container focus:ring-0 transition-colors" placeholder="john@example.com" type="email" required/>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Your Challenge</label>
+<textarea name="message" class="w-full bg-surface-container-low border-2 border-transparent rounded-lg p-md font-body-md text-body-md focus:border-primary-container focus:ring-0 transition-colors resize-none" placeholder="Describe the technical constraints or product vision you're facing..." rows="6" required></textarea>
+</div>
+<div class="flex items-center gap-md pt-base">
+<button class="bg-primary-container text-on-primary-container px-xl py-md rounded-lg font-label-md text-label-md hover:opacity-90 transition-all duration-300 flex items-center gap-sm active:scale-[0.98]">
+                            Send Message
+                            <span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+<span class="font-label-md text-label-md text-on-surface-variant hidden md:block italic">Typically responds within 24 hours.</span>
+</div>
+</form>
+</div>
+
+<!-- Right: Sidebar Information -->
+<div class="lg:col-span-4 space-y-md">
+<!-- Info Card -->
+<div class="bg-surface-container-high p-md md:p-lg rounded-xl border border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Direct Connect</h3>
+<div class="space-y-lg">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Email</p>
+<a class="font-body-md text-body-md text-on-surface font-semibold hover:text-primary transition-colors" href="mailto:v-aman@outlook.com">v-aman@outlook.com</a>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">LinkedIn</p>
+<a class="font-body-md text-body-md text-on-surface font-semibold hover:text-primary transition-colors" href="#">linkedin.com/in/devarchitect</a>
+</div>
+</div>
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">terminal</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">GitHub</p>
+<a class="font-body-md text-body-md text-on-surface font-semibold hover:text-primary transition-colors" href="#">github.com/devarchitect</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Studio Image Card -->
+<div class="relative rounded-xl overflow-hidden aspect-video lg:aspect-square group cursor-crosshair">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAChfk8uRoxzPZtcsI6PD4hRqOIxYSA1faYgbJzRlxwwXQzpnmlBawO9iwJ6Gxy2p6enPu4rYVq9bU_8KwAlUFbp5GQkHGoZ0BtuEc2hQBp6ehZyO5gFHILCAZrhRE8giWw02Fh3gsO7ZhNdpinEpK2wdeGT3gO0L62M5XeROYGmLxpJFjuPY8yIgk9Nw39Q7ehXncGbs36ZINwMv-R0PnngJvXKesA7vzpROxrRFrP9KmpFqQPLFC6kynUgc4awGStZ-F_6liwdLU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/60 to-transparent flex items-end p-md">
+<p class="text-white font-label-md text-label-md">Remote Studio • Built for Scale</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Secondary Section: Why Us / Trust -->
+<section class="mt-xl py-xl border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="space-y-sm">
+<h4 class="font-headline-md text-headline-md text-on-surface">01 / Scope</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">We dive deep into your architecture before writing a single line of code, ensuring the foundation supports your future growth.</p>
+</div>
+<div class="space-y-sm">
+<h4 class="font-headline-md text-headline-md text-on-surface">02 / Execute</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Surgical precision in deployment. We optimize for latency, security, and developer experience in every environment.</p>
+</div>
+<div class="space-y-sm">
+<h4 class="font-headline-md text-headline-md text-on-surface">03 / Scale</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Our systems are built to handle the unexpected. Elastic architecture that grows as your user base explodes.</p>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-12 bg-surface-container-lowest border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin gap-gutter max-w-[1440px] mx-auto">
+<div class="font-label-caps text-[14px] text-on-surface font-black">ARCHITECT.IO</div>
+<p class="font-code-sm text-[12px] text-secondary">© 2024 ARCHITECT.IO - Engineered for Performance</p>
+<div class="flex gap-md">
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">GitHub</a>
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">LinkedIn</a>
+<a class="text-outline hover:text-primary transition-colors font-code-sm text-[12px] opacity-80 hover:opacity-100" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
