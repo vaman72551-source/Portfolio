@@ -239,6 +239,24 @@ function initContactForm() {
     if (!form) return;
 
     const inputs = form.querySelectorAll('input, textarea');
+    const captchaLabel = document.getElementById('captcha-question');
+    const captchaInput = document.getElementById('contact-captcha');
+    let captchaAnswer = 0;
+
+    function generateCaptcha() {
+        if (!captchaLabel) return;
+        const num1 = Math.floor(Math.random() * 9) + 1; // 1-9
+        const num2 = Math.floor(Math.random() * 9) + 1; // 1-9
+        captchaAnswer = num1 + num2;
+        captchaLabel.textContent = `What is ${num1} + ${num2}?`;
+        if (captchaInput) {
+            captchaInput.value = '';
+            clearInvalid(captchaInput);
+        }
+    }
+
+    // Initialize captcha on load
+    generateCaptcha();
     
     // Label shift interactions
     inputs.forEach(el => {
@@ -260,8 +278,8 @@ function initContactForm() {
         
         // Validate required fields
         inputs.forEach(input => {
-            // Mark fields required implicitly for our check
             const isEmail = input.type === 'email';
+            const isCaptcha = input.id === 'contact-captcha';
             const value = input.value.trim();
             
             if (!value) {
@@ -270,6 +288,9 @@ function initContactForm() {
             } else if (isEmail && !validateEmail(value)) {
                 isValid = false;
                 markInvalid(input, 'Please enter a valid email address.');
+            } else if (isCaptcha && parseInt(value, 10) !== captchaAnswer) {
+                isValid = false;
+                markInvalid(input, 'Incorrect answer. Please solve the security verification again.');
             } else {
                 clearInvalid(input);
             }
@@ -284,10 +305,10 @@ function initContactForm() {
                 submitBtn.innerHTML = 'Sending... <span class="material-symbols-outlined text-[20px] animate-spin ml-2">sync</span>';
             }
 
-            // Gather form inputs
+            // Gather form inputs (excluding captcha)
             const formData = {};
             inputs.forEach(input => {
-                if (input.name) {
+                if (input.name && input.name !== 'captcha') {
                     formData[input.name] = input.value.trim();
                 }
             });
@@ -305,6 +326,7 @@ function initContactForm() {
                 if (res.ok) {
                     showToast('Message sent successfully! I will review and reply within 24 hours.', 'success');
                     form.reset();
+                    generateCaptcha();
                 } else {
                     throw new Error('Response error');
                 }
@@ -312,6 +334,7 @@ function initContactForm() {
             .catch(err => {
                 console.error(err);
                 showToast('Oops! Something went wrong. Please try emailing directly.', 'error');
+                generateCaptcha();
             })
             .finally(() => {
                 if (submitBtn) {
