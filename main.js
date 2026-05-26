@@ -433,6 +433,7 @@ function initProjectModal() {
     const projectCards = document.querySelectorAll('.project-card');
     const modal = document.getElementById('project-modal');
     const modalClose = document.getElementById('modal-close');
+    const copyLinkBtn = document.getElementById('modal-copy-link');
     
     if (!projectCards.length || !modal || !modalClose) return;
     
@@ -440,7 +441,6 @@ function initProjectModal() {
     const modalRole = document.getElementById('modal-role');
     const modalCategory = document.getElementById('modal-category');
     const modalDescription = document.getElementById('modal-description');
-    const modalDeliverables = document.getElementById('modal-deliverables');
     const modalTags = document.getElementById('modal-tags');
     const modalMainImg = document.getElementById('modal-main-img');
     const modalThumbnails = document.getElementById('modal-thumbnails');
@@ -450,112 +450,148 @@ function initProjectModal() {
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxImg = document.getElementById('lightbox-img');
 
-    // Open Modal
-    projectCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const title = card.getAttribute('data-title') || '';
-            const role = card.getAttribute('data-role') || '';
-            const categoryAttr = card.getAttribute('data-category') || '';
-            const description = card.getAttribute('data-long-description') || '';
-            const deliverablesStr = card.getAttribute('data-deliverables') || '';
-            const tagsStr = card.getAttribute('data-tags') || '';
-            const imagesStr = card.getAttribute('data-images') || '';
-            
-            // Format category name for badge
-            const categoryName = categoryAttr.split(' ').map(c => {
-                if (c === 'infra') return 'Infrastructure';
-                if (c === 'ai') return 'AI / Machine Learning';
-                if (c === 'web') return 'Web Application';
-                return c.charAt(0).toUpperCase() + c.slice(1);
-            }).join(' & ');
-            
-            // Set text content
-            if (modalTitle) modalTitle.textContent = title;
-            if (modalRole) modalRole.textContent = role ? `Role: ${role}` : '';
-            if (modalCategory) modalCategory.textContent = categoryName;
-            if (modalDescription) modalDescription.textContent = description;
-            
-            // Populate Deliverables List
-            if (modalDeliverables) {
-                modalDeliverables.innerHTML = '';
-                if (deliverablesStr) {
-                    const deliverables = deliverablesStr.split(';');
-                    deliverables.forEach(item => {
-                        if (item.trim()) {
-                            const li = document.createElement('li');
-                            li.textContent = item.trim();
-                            modalDeliverables.appendChild(li);
-                        }
-                    });
-                }
-            }
-            
-            // Populate Tags
-            if (modalTags) {
-                modalTags.innerHTML = '';
-                if (tagsStr) {
-                    const tags = tagsStr.split(',');
-                    tags.forEach(tag => {
-                        if (tag.trim()) {
-                            const span = document.createElement('span');
-                            span.className = 'px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[11px] font-bold uppercase tracking-wider';
-                            span.textContent = tag.trim();
-                            modalTags.appendChild(span);
-                        }
-                    });
-                }
-            }
-            
-            // Setup Gallery/Images & Thumbnails
-            if (modalThumbnails && modalMainImg) {
-                modalThumbnails.innerHTML = '';
-                if (imagesStr) {
-                    const images = imagesStr.split(',');
-                    
-                    // Set default main image
-                    modalMainImg.src = images[0].trim();
-                    
-                    // Populate thumbnails if there are multiple images
-                    if (images.length > 1) {
-                        images.forEach((imgSrc, idx) => {
-                            const cleanSrc = imgSrc.trim();
-                            const thumb = document.createElement('button');
-                            thumb.className = `w-12 h-12 rounded-lg border-2 overflow-hidden bg-surface-container transition-all hover:border-primary ${idx === 0 ? 'border-primary' : 'border-outline-variant/30'}`;
-                            thumb.innerHTML = `<img src="${cleanSrc}" alt="thumbnail" class="w-full h-full object-cover"/>`;
-                            
-                            thumb.addEventListener('click', (e) => {
-                                e.stopPropagation();
-                                modalMainImg.src = cleanSrc;
-                                // Update border UI
-                                modalThumbnails.querySelectorAll('button').forEach(btn => btn.classList.remove('border-primary'));
-                                modalThumbnails.querySelectorAll('button').forEach(btn => btn.classList.add('border-outline-variant/30'));
-                                thumb.classList.add('border-primary');
-                                thumb.classList.remove('border-outline-variant/30');
-                            });
-                            
-                            modalThumbnails.appendChild(thumb);
+    let currentSlug = '';
+
+    // Function to generate slug
+    const getSlug = (title) => {
+        return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    };
+
+    // Open Modal function
+    const openProjectModal = (card) => {
+        const title = card.getAttribute('data-title') || '';
+        const role = card.getAttribute('data-role') || '';
+        const categoryAttr = card.getAttribute('data-category') || '';
+        const description = card.getAttribute('data-long-description') || '';
+        const tagsStr = card.getAttribute('data-tags') || '';
+        const imagesStr = card.getAttribute('data-images') || '';
+        
+        currentSlug = getSlug(title);
+
+        // Format category name for badge
+        const categoryName = categoryAttr.split(' ').map(c => {
+            if (c === 'infra') return 'Infrastructure';
+            if (c === 'ai') return 'AI / Machine Learning';
+            if (c === 'web') return 'Web Application';
+            return c.charAt(0).toUpperCase() + c.slice(1);
+        }).join(' & ');
+        
+        // Set text content
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalRole) modalRole.textContent = role || '';
+        if (modalCategory) modalCategory.textContent = categoryName;
+        
+        // Populate description with paragraphs and lists
+        if (modalDescription) {
+            modalDescription.innerHTML = '';
+            if (description) {
+                const blocks = description.split('||');
+                blocks.forEach(block => {
+                    if (block.includes('\n') || block.includes('•')) {
+                        // It's a list or has lines
+                        const lines = block.split('\n');
+                        const container = document.createElement('div');
+                        container.className = 'space-y-1.5 my-2';
+                        lines.forEach(line => {
+                            const trimmedLine = line.trim();
+                            if (trimmedLine) {
+                                const p = document.createElement('p');
+                                if (trimmedLine.startsWith('-') || trimmedLine.startsWith('•')) {
+                                    p.className = 'pl-4 text-on-surface-variant leading-relaxed';
+                                    p.textContent = trimmedLine;
+                                } else {
+                                    p.className = 'text-on-surface-variant leading-relaxed';
+                                    p.textContent = trimmedLine;
+                                }
+                                container.appendChild(p);
+                            }
                         });
-                        modalThumbnails.classList.remove('hidden');
+                        modalDescription.appendChild(container);
                     } else {
-                        modalThumbnails.classList.add('hidden');
+                        // Plain paragraph
+                        const p = document.createElement('p');
+                        p.className = 'text-on-surface-variant leading-relaxed';
+                        p.textContent = block.trim();
+                        modalDescription.appendChild(p);
                     }
+                });
+            }
+        }
+        
+        // Populate Tags (Skills)
+        if (modalTags) {
+            modalTags.innerHTML = '';
+            if (tagsStr) {
+                const tags = tagsStr.split(',');
+                tags.forEach(tag => {
+                    if (tag.trim()) {
+                        const span = document.createElement('span');
+                        span.className = 'px-3 py-1 rounded-lg bg-slate-100 text-slate-800 text-[13px] font-medium transition-colors hover:bg-slate-200';
+                        span.textContent = tag.trim();
+                        modalTags.appendChild(span);
+                    }
+                });
+            }
+        }
+        
+        // Setup Gallery/Images & Thumbnails
+        if (modalThumbnails && modalMainImg) {
+            modalThumbnails.innerHTML = '';
+            if (imagesStr) {
+                const images = imagesStr.split(',');
+                
+                // Set default main image
+                modalMainImg.src = images[0].trim();
+                
+                // Populate thumbnails if there are multiple images
+                if (images.length > 1) {
+                    images.forEach((imgSrc, idx) => {
+                        const cleanSrc = imgSrc.trim();
+                        const thumb = document.createElement('button');
+                        thumb.className = `w-14 h-14 rounded-xl border-2 overflow-hidden bg-surface-container transition-all hover:border-primary active:scale-95 flex-shrink-0 ${idx === 0 ? 'border-primary shadow-sm' : 'border-outline-variant/30 opacity-70 hover:opacity-100'}`;
+                        thumb.innerHTML = `<img src="${cleanSrc}" alt="thumbnail" class="w-full h-full object-cover"/>`;
+                        
+                        thumb.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            modalMainImg.src = cleanSrc;
+                            // Update border UI
+                            modalThumbnails.querySelectorAll('button').forEach(btn => {
+                                btn.classList.remove('border-primary', 'shadow-sm');
+                                btn.classList.add('border-outline-variant/30', 'opacity-70');
+                            });
+                            thumb.classList.add('border-primary', 'shadow-sm');
+                            thumb.classList.remove('border-outline-variant/30', 'opacity-70');
+                        });
+                        
+                        modalThumbnails.appendChild(thumb);
+                    });
+                    modalThumbnails.classList.remove('hidden');
+                } else {
+                    modalThumbnails.classList.add('hidden');
                 }
             }
-            
-            // Animate Modal In
-            modal.classList.remove('hidden');
-            // Force reflow
-            void modal.offsetWidth;
-            modal.classList.remove('opacity-0');
-            modal.classList.add('opacity-100');
-            
-            const modalContent = modal.querySelector('.bg-surface');
-            if (modalContent) {
-                modalContent.classList.remove('scale-95');
-                modalContent.classList.add('scale-100');
-            }
-            document.body.classList.add('overflow-hidden'); // Prevent background scroll
-        });
+        }
+        
+        // Animate Modal In
+        modal.classList.remove('hidden');
+        void modal.offsetWidth; // Force reflow
+        modal.classList.remove('opacity-0');
+        modal.classList.add('opacity-100');
+        
+        const modalContent = modal.querySelector('.bg-surface');
+        if (modalContent) {
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+        document.body.classList.add('overflow-hidden'); // Prevent background scroll
+        
+        // Update URL Hash silently (without scrolling)
+        history.replaceState(null, null, '#project-' + currentSlug);
+    };
+
+    // Open Modal when clicking card
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => openProjectModal(card));
     });
 
     // Close Modal Function
@@ -572,6 +608,8 @@ function initProjectModal() {
         setTimeout(() => {
             modal.classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
+            // Reset hash
+            history.replaceState(null, null, ' ');
         }, 300);
     };
 
@@ -594,6 +632,40 @@ function initProjectModal() {
             }
         }
     });
+
+    // Copy Link action
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!currentSlug) return;
+            
+            const shareUrl = window.location.origin + window.location.pathname + '#project-' + currentSlug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                // Change copy link state briefly to show feedback
+                const btnText = copyLinkBtn.querySelector('span:not(.material-symbols-outlined)');
+                const btnIcon = copyLinkBtn.querySelector('.material-symbols-outlined');
+                
+                const originalText = btnText ? btnText.textContent : 'Copy link';
+                const originalIcon = btnIcon ? btnIcon.textContent : 'link';
+                
+                if (btnText) btnText.textContent = 'Copied!';
+                if (btnIcon) btnIcon.textContent = 'check';
+                copyLinkBtn.classList.add('bg-green-100');
+                
+                showToast('Project link copied to clipboard!', 'success');
+                
+                setTimeout(() => {
+                    if (btnText) btnText.textContent = originalText;
+                    if (btnIcon) btnIcon.textContent = originalIcon;
+                    copyLinkBtn.classList.remove('bg-green-100');
+                }, 2000);
+            }).catch(err => {
+                console.error('Could not copy link: ', err);
+                showToast('Failed to copy link.', 'error');
+            });
+        });
+    }
 
     // Lightbox Controls
     if (modalMainImg && lightbox && lightboxImg) {
@@ -635,5 +707,22 @@ function initProjectModal() {
             }
         });
     }
+
+    // Auto-open modal based on URL hash
+    const handleHashOpen = () => {
+        const hash = window.location.hash;
+        if (hash.startsWith('#project-')) {
+            const slug = hash.replace('#project-', '');
+            const matchedCard = Array.from(projectCards).find(card => {
+                const title = card.getAttribute('data-title') || '';
+                return getSlug(title) === slug;
+            });
+            if (matchedCard) {
+                setTimeout(() => openProjectModal(matchedCard), 100);
+            }
+        }
+    };
+
+    handleHashOpen();
 }
 

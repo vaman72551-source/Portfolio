@@ -107,11 +107,14 @@
 <!-- Project 2 -->
 <div class="project-card masonry-item card-shadow bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden group cursor-pointer" 
      data-category="ai"
-     data-title="AI Email Triage Automation"
-     data-role="Automation Developer &amp; AI Specialist"
-     data-long-description="An automated integration pipeline that watches a business Gmail inbox for incoming client inquiries, extracts the email body, and passes it to the Gemini 1.5 Pro model via structured HTTP API calls. Gemini dynamically evaluates the message intent and returns structured JSON classifying the email, summarizing it in one sentence, and setting priority levels. This response is parsed and logged immediately into Google Sheets, enabling teams to instantly triage customer tickets with zero manual effort."
+     data-title="AI Email Triage Automation — Make.com + Gemini + Google Sheets"
+     data-role="Automation Developer &amp; AI Integration Specialist"
+     data-long-description="Built an end-to-end AI-powered email automation workflow using Make.com, Google Gemini API, and Google Sheets.||The system automatically watches Gmail for incoming emails, sends the content to Gemini AI for intelligent classification, and logs structured results to a Google Sheet — zero manual work required.||Outputs per email:
+- Category (Sales, Support, Urgent, Spam)
+- One-line AI summary
+- Priority level (High, Medium, Low)||Includes error handling, spam filtering, and a modular structure for easy scaling. Delivered with full documentation and Loom walk-through."
      data-images="email-triage-flow.png,email-triage-details.png"
-     data-tags="Make.com,Gemini 1.5 Pro,Google Sheets,Gmail,Automated Workflow"
+     data-tags="Make.com,Google Sheets Automation,Gmail,Automated Workflow,Gemini 1.5 Pro"
      data-deliverables="Intelligent email classification (Sales, Support, Urgent, Spam);One-line AI summary extraction;Automatic Priority levels setting (High, Medium, Low);Error handling and automatic retry mechanics;Modular and easily scalable structure">
 <div class="aspect-[4/3] relative overflow-hidden bg-surface-container">
 <img alt="AI Email Triage Automation Flow" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="email-triage-flow.png"/>
@@ -273,49 +276,65 @@
 </footer>
 
 <!-- Project Details Modal -->
-<div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-background/80 backdrop-blur-md hidden transition-all duration-300 opacity-0">
-  <div class="bg-surface border border-outline-variant rounded-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-[0_20px_50px_rgba(0,103,127,0.15)] relative scale-95 transition-all duration-300">
+<div id="project-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/60 backdrop-blur-md hidden transition-all duration-300 opacity-0">
+  <div class="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.12)] relative scale-95 transition-all duration-300">
     
-    <!-- Close Button -->
-    <button id="modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface-container-low border border-outline-variant/30 flex items-center justify-center text-on-surface hover:bg-primary-container/10 transition-colors z-20" aria-label="Close Modal">
-      <span class="material-symbols-outlined text-[24px]">close</span>
-    </button>
-    
-    <!-- Left Column: Gallery / Images -->
-    <div class="w-full md:w-1/2 bg-surface-container-low flex flex-col justify-between p-md border-r border-outline-variant/30 max-h-[40vh] md:max-h-full overflow-y-auto">
-      <div class="relative flex-grow flex items-center justify-center min-h-[220px] py-4">
-        <!-- Full Image view -->
-        <img id="modal-main-img" src="" alt="Project Image" class="max-w-full max-h-[320px] object-contain rounded-lg cursor-zoom-in hover:scale-[1.02] transition-transform duration-300"/>
+    <!-- Modal Header -->
+    <div class="flex justify-between items-start p-6 md:p-8 pb-4 md:pb-4">
+      <div class="flex-grow pr-6">
+        <h2 id="modal-title" class="font-headline-lg text-xl md:text-2xl font-bold text-on-surface">Project Title</h2>
       </div>
-      <!-- Thumbnails indicator -->
-      <div id="modal-thumbnails" class="flex gap-sm mt-md overflow-x-auto justify-center pb-2">
-        <!-- Dyn. populated thumbs -->
+      <div class="flex items-center gap-6 flex-shrink-0 pt-1">
+        <button id="modal-copy-link" class="flex items-center gap-1.5 text-sm font-semibold text-green-600 hover:text-green-700 transition-all active:scale-95 py-1 px-3 rounded-lg hover:bg-green-50" aria-label="Copy project link">
+          <span>Copy link</span>
+          <span class="material-symbols-outlined text-[18px]">link</span>
+        </button>
+        <button id="modal-close" class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-slate-100 transition-all" aria-label="Close Modal">
+          <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
       </div>
     </div>
     
-    <!-- Right Column: Details Info -->
-    <div class="w-full md:w-1/2 p-md md:p-lg flex flex-col justify-between max-h-[45vh] md:max-h-full overflow-y-auto">
-      <div class="flex-grow">
-        <span id="modal-category" class="px-sm py-1 rounded-full bg-primary-container/10 text-primary text-[10px] font-bold uppercase tracking-wider inline-block mb-3">Category</span>
-        <h2 id="modal-title" class="font-headline-lg text-headline-lg text-on-surface mb-xs">Project Title</h2>
-        <p id="modal-role" class="font-body-sm text-[13px] text-primary uppercase font-bold tracking-wider mb-sm">Role: Architect</p>
+    <!-- Modal Body -->
+    <div class="flex-grow overflow-y-auto p-6 md:p-8 pt-2 md:pt-2">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <div class="h-px w-full bg-outline-variant/30 my-md"></div>
-        
-        <h4 class="font-label-caps text-[11px] font-bold text-outline uppercase tracking-wider mb-2">Overview</h4>
-        <p id="modal-description" class="font-body-md text-on-surface-variant leading-relaxed mb-md">Long project description details.</p>
-        
-        <h4 class="font-label-caps text-[11px] font-bold text-outline uppercase tracking-wider mb-2">Key Deliverables</h4>
-        <ul id="modal-deliverables" class="list-disc pl-md font-body-md text-on-surface-variant space-y-1 mb-md">
-          <!-- Dyn. populated list items -->
-        </ul>
-      </div>
-      
-      <div class="mt-auto pt-md border-t border-outline-variant/20">
-        <h4 class="font-label-caps text-[11px] font-bold text-outline uppercase tracking-wider mb-2">Technologies</h4>
-        <div id="modal-tags" class="flex flex-wrap gap-xs">
-          <!-- Dyn. tags -->
+        <!-- Left Column: Details (40% / 5 cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          <!-- Role -->
+          <div class="text-body-md text-on-surface-variant font-medium">
+            <span class="text-outline">My role.</span>
+            <span id="modal-role" class="text-on-surface ml-1 font-semibold">Role Description</span>
+          </div>
+          
+          <!-- Description -->
+          <div class="flex flex-col gap-2">
+            <span class="text-sm font-medium text-outline">Project description.</span>
+            <div id="modal-description" class="text-body-md text-on-surface leading-relaxed space-y-4">
+              <!-- Dynamically populated paragraphs -->
+            </div>
+          </div>
+          
+          <!-- Skills -->
+          <div class="flex flex-col gap-3">
+            <span class="text-sm font-medium text-outline">Skills and deliverables</span>
+            <div id="modal-tags" class="flex flex-wrap gap-2">
+              <!-- Dynamically populated pills -->
+            </div>
+          </div>
         </div>
+        
+        <!-- Right Column: Image / Gallery (60% / 7 cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-4">
+          <div class="relative bg-slate-50 rounded-2xl overflow-hidden flex items-center justify-center min-h-[300px] max-h-[500px] p-4">
+            <img id="modal-main-img" src="" alt="Project Image" class="max-w-full max-h-[460px] object-contain rounded-lg cursor-zoom-in hover:scale-[1.01] transition-transform duration-300 shadow-sm"/>
+          </div>
+          <!-- Gallery Thumbnails -->
+          <div id="modal-thumbnails" class="flex gap-2 overflow-x-auto py-1 justify-center">
+            <!-- Dynamically populated thumbnail buttons -->
+          </div>
+        </div>
+        
       </div>
     </div>
     
